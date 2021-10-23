@@ -5,6 +5,7 @@ import urllib.request
 import re
 from typing import List
 
+
 def create_counter(text: str) -> Counter:
     """
     :param text: a given text
@@ -16,19 +17,18 @@ def create_counter(text: str) -> Counter:
     return words_counter
 
 
-def write_counter_to_file(counter: Counter, file_name='counter'):
+def save_counter_to_file(counter: Counter, file_name='counter'):
     """
     :param counter: a given counter
     :param file_name: the desired name of the counter file
     """
-
     # if counter.pkl already exits - unite them
     if counter_exists():
         old_counter = load_counter_from_file()
         counter += old_counter
 
-    with open(file_name + '.pkl', 'wb') as handle:
-        pickle.dump(counter, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    with open(file_name + '.pkl', 'wb') as file:
+        pickle.dump(counter, file, protocol=pickle.HIGHEST_PROTOCOL)
 
 
 def load_counter_from_file(file_name='counter') -> Counter:
@@ -36,10 +36,9 @@ def load_counter_from_file(file_name='counter') -> Counter:
     :param file_name: counter's name
     :return: the counter from the saved file if it is exists, a new counter otherwise
     """
-
     if counter_exists():
-        with open(file_name + '.pkl', 'rb') as handle:
-            counter = pickle.load(handle)
+        with open(file_name + '.pkl', 'rb') as file:
+            counter = pickle.load(file)
             return counter
 
     else:
@@ -66,11 +65,11 @@ def url_to_counter(url: str) -> Counter:
     try:
         text = urllib.request.urlopen(url).read().decode("utf-8")
         counter = create_counter(text)
-        write_counter_to_file(counter)
+        save_counter_to_file(counter)
         return counter
 
-    except:  # URLError is subclass of OSError
-        print('ERROR: bad url was given')
+    except:
+        print('ERROR: bad url was given - insert valid urls only')
 
 
 def string_to_counter(text: str) -> Counter:
@@ -80,11 +79,11 @@ def string_to_counter(text: str) -> Counter:
     """
     try:
         counter = create_counter(text)
-        write_counter_to_file(counter)
+        save_counter_to_file(counter)
         return counter
 
     except:
-        print('ERROR: bad argument was given (insert only strings)')
+        print('ERROR: bad argument was given - insert strings only')
 
 
 def text_file_to_counter(file_path: str) -> Counter:
@@ -95,11 +94,11 @@ def text_file_to_counter(file_path: str) -> Counter:
     try:
         with open(file_path) as file:
             counter = create_counter(file.read())
-            write_counter_to_file(counter)
+            save_counter_to_file(counter)
             return counter
 
     except:
-        print('ERROR: bad file path was given, file not found')
+        print('ERROR: bad file path was given, file not found - insert valid file paths only')
 
 
 def clean_text(text: str) -> str:
@@ -111,7 +110,6 @@ def clean_text(text: str) -> str:
     Any non-alphabet char will be cleaned up
     Any non-alphabet char will be considered as a separator between chars sequences (words)
     """
-    # cleaned = re.sub('[!@#$%^&*():\[\]".&\'0-9,]', '', text).lower()
     cleaned = re.sub('[^a-z ]+', ' ', text.lower())
     return cleaned
 
@@ -121,5 +119,4 @@ def split_to_words(s: str) -> List[str]:
     :param s:  the string we want to split
     :return: list of the words
     """
-
     return list(re.split('\W+', s))

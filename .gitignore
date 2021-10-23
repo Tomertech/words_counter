@@ -3,3 +3,6 @@
 /__pycache__
 /counter/__pycache__
 /utilities/__pycache__
+/tests/counter.pkl
+counter.pkl
+assumptions.txt

@@ -19,7 +19,7 @@ args = parser.parse_args()
 
 if args.service in ['counter', 'c']:
     print('Got it, now processing...')
-    word_counter.insert_source(args.source, args.type)
+    word_counter.source_to_counter(args.source, args.type)
     print('Done')
 
 elif args.service in ['statistics', 's']:
@@ -28,6 +28,6 @@ elif args.service in ['statistics', 's']:
 
 elif args.service in ['reset', 'r']:
     word_counter.delete_counter()
-    print('reset counter')
+    print('counter was reset')
 
 # --source "C:/Users/tashuach/lotr.txt" --type "file"
