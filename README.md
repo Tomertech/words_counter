@@ -19,29 +19,29 @@ When using the Counter endpoint there are 3 options:
 
 * Insert a path to a text file:
 ```
-py main.py --service "counter" --source "this_is_a_path/text_file.txt" --type "file"
+py main.py --service counter --source this_is_a_path/text_file.txt --type file
 ```
 
-* Insert a URL to a text file:
+* Insert a URL to text:
 ```
-py main.py --service "counter" (or "c") --source "this_is_a_url" --type "url"
+py main.py --service counter (or c) --source this_is_a_url --type url
                             
 ```
 
 * Insert a string:
 ```
-py main.py --service "counter" --source "this_is_a_string" --type "string"
+py main.py --service counter --source this_is_a_string --type string
 ```
 
 ##### Using the Statistics endpoint:
 * Get the number of times a word appeared so far
 ```
-py main.py --service "statistics" (or "s") --word "this_is_the_word"
+py main.py --service statistics (or s) --word this_is_the_word
 ```
 
 ##### Reset the counter:
 ```
-py main.py --service "reset" (or "r")
+py main.py --service reset (or r)
 ```
 
 ### Assumptions
@@ -72,34 +72,34 @@ py main.py --service "reset" (or "r")
 ### Examples
 Using `word_counter` with a file
 ```
-py main.py --service "counter" --source "texty.txt" --type "file"
+py main.py --service counter --source tests/captmidn.txt --type file
 Got it, now processing...
 Done
 ```
 
 Using `word_counter` with a url
 ```
-py main.py --service "counter" --source "http://www.textfiles.com/100/cDc-0200.txt" --type "url"
+py main.py --service counter --source http://www.textfiles.com/100/cDc-0200.txt --type url
 Got it, now processing...
 Done
 ```
 
 Using `word_counter` with a string
 ```
-py main.py --service "counter" --source "Hey Lemonade! looking forward to hearing from you :)" --type "string"
+py main.py --service counter --source Hey Lemonade! looking forward to hearing from you :) --type string
 Got it, now processing...
 Done
 ```
 
 Using `word_statistics`
 ```
-py main.py --service "statistics" --word "the"
+py main.py --service statistics --word the
 The word "the" appeared so far 713 times
 ```
 
 Resetting the `word_counter`
 ```
-py main.py --service "reset"
+py main.py --service reset
 counter was reset
 ```
 
