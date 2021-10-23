@@ -1,24 +1,19 @@
 # Words counter
 
-An API for retrieving text from URl, file or string, parsing it and counting the words.
+An API with 2 endpoint: `word_counter.py` and `word_statistics.py`. 
 
+* `word_counter.py` - receives a text input and counts the number of appearances for each word in the input.
+* `word_statistics.py` - receives a word and returns the number of times the word appeared so far (in all previous calls) 
 
-### Getting Started
-
-First, we need to clone the project.\
-Go to the location you want to clone the project to, and do:
-```
-git clone https://github.com/Tomertech/words_count.git
-```
 
 ### How to use
+First, clone the project.
+Now, you can either:
+1.Import `word_counter.py` and `word_statistics.py` and use it's API.
+2.Use the CLI (command line interface) that is given below.
 
-* Import `word_counter.py` and `word_statistics.py` and use its API.
 
-* Use the UI that is given below.
-
-
-##### Using the Counter endpoint:
+##### Using the CLI :
 
 When using the Counter endpoint there are 3 options:
 
@@ -39,7 +34,7 @@ py main.py --service "counter" --source "this_is_a_string" --type "string"
 ```
 
 ##### Using the Statistics endpoint:
-* Get a word number of appearances
+* Get the number of times a word appeared so far
 ```
 py main.py --service "statistics" (or "s") --word "this_is_the_word"
 ```
@@ -50,15 +45,13 @@ py main.py --service "reset" (or "r")
 ```
 
 ### Assumptions
-* All given texts are encoded by 'utf-8' format.
-* All given arguments are valid (url is a valid url that leads to text, file path is a valid file path to a text file, a string is a valid string).
-* Only alphabet sequences ('a'-'z' or 'A'-'Z') counts as words.
-* Any non-alphabet char will be cleaned up.
-* Any non-alphabet char will be considered as a separator between chars sequences - words.
+* All given texts are encoded by 'utf-8' format
+* Only alphabet consecutive sequences ('a'-'z' or 'A'-'Z') counts as words
+* All words are considered as case insensitive
+* Any non-alphabet char will be considered as a separator between chars sequences - words
 
-please see the examples below.
 
-### Input Output Examples
+#### Input Output Examples
 	a string => the dictionary that the counter creates from it: {'word': number of appearances}
 	
 	Me ME mE     =>     {'me': 3}
@@ -76,45 +69,45 @@ please see the examples below.
 	m#@e $#m$$e  %^m_*e5 &7m09e2                    =>      {'m': 4, 'e': 4}
 	mmee meme                                       =>      {'mmee': 1, 'meme': 1}
 
-### Usage Examples
-Using counter with a file
+### Examples
+Using `word_counter` with a file
 ```
 py main.py --service "counter" --source "texty.txt" --type "file"
 Got it, now processing...
 Done
 ```
 
-Using counter with a url
+Using `word_counter` with a url
 ```
 py main.py --service "counter" --source "http://www.textfiles.com/100/cDc-0200.txt" --type "url"
 Got it, now processing...
 Done
 ```
 
-Using counter with a string
+Using `word_counter` with a string
 ```
 py main.py --service "counter" --source "Hey Lemonade! looking forward to hearing from you :)" --type "string"
 Got it, now processing...
 Done
 ```
 
-Using statistics
+Using `word_statistics`
 ```
 py main.py --service "statistics" --word "the"
 The word "the" appeared so far 713 times
 ```
 
-Resetting the counter
+Resetting the `word_counter`
 ```
 py main.py --service "reset"
 counter was reset
 ```
 
 ### Tests
-The project's folder includes `tests.py` file that contains a few tests for the API
+The project's folder includes `tests.py` file that contains a unittest for the API
 
 
 
 ### Author
 
-* **Tomer Ashuach**  [GitHub](https://github.com/Tomertech) [LinkedIn](https://www.linkedin.com/in/Tomerashuach/)
+**Tomer Ashuach**  [GitHub](https://github.com/Tomertech) [LinkedIn](https://www.linkedin.com/in/Tomerashuach/)
