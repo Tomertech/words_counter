@@ -33,7 +33,7 @@ Got it!
 
 Insert a URL to text:
 ```
-POST http://127.0.0.1:5000/wordscounter?type=url&source=http://www.textfiles.com/100/hack11a.txt                            
+POST http://127.0.0.1:5000/wordscounter?type=url&source=http://www.textfiles.com/100/hack11a.txt
 
 Got it!
 ```
