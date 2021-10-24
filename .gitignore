@@ -1,4 +1,3 @@
-/setup.py
 /.idea
 /__pycache__
 /counter_utils/__pycache__
@@ -8,4 +7,3 @@
 /tests/lotr.txt
 /tests/texty.txt
 counter.pkl
-assumptions.txt

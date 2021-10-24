@@ -9,6 +9,23 @@ from typing import List
 counter_file_name = 'counter.pkl'
 
 
+def word_counter(source: str, source_type: str):
+    """
+    :param source: text path (url, file path or string)
+    :param source_type: the type of the source
+    :return: None
+
+    Receives a text input and counts the number of appearances for each word in the input and saves the counter_utils.
+    """
+
+    if source_type == 'url':
+        url_to_counter(source)
+    elif source_type == 'file':
+        text_file_to_counter(source)
+    elif source_type == 'string':
+        string_to_counter(source)
+
+
 def create_counter(text: str) -> Counter:
     """
     :param text: a given text
@@ -17,9 +34,13 @@ def create_counter(text: str) -> Counter:
     cleaned_text = clean_text(text)
     words_list = split_to_words(cleaned_text)
     counter = Counter(words_list)
+    delete_redundant_words(counter)
+    return counter
+
+
+def delete_redundant_words(counter: Counter):
     del counter['']
     del counter[' ']
-    return counter
 
 
 def save_counter_to_file(counter: Counter):
@@ -28,15 +49,19 @@ def save_counter_to_file(counter: Counter):
     """
     # unite old a new counter
     old_counter = load_counter_from_file()
-    try:
-        if old_counter:
-            counter += old_counter
+    if old_counter:
+        counter += old_counter
 
-        with open(counter_file_name, 'wb') as file:
-            pickle.dump(counter, file, protocol=pickle.HIGHEST_PROTOCOL)
+    with open(counter_file_name, 'wb') as file:
+        pickle.dump(counter, file, protocol=pickle.HIGHEST_PROTOCOL)
 
-    except OSError:
-        print('ERROR: could not save counter file')
+
+def delete_counter():
+    """
+    resetting the counter (by deleting it)
+    """
+    if counter_exists():
+        os.remove(counter_file_name)
 
 
 def load_counter_from_file() -> Counter:
@@ -66,14 +91,10 @@ def url_to_counter(url: str) -> Counter:
     :param url: a url to the text source as string
     :return: a counter with cleaned up words as keys and occurrences as values
     """
-    try:
-        text = urllib.request.urlopen(url).read().decode("utf-8")
-        counter = create_counter(text)
-        save_counter_to_file(counter)
-        return counter
-
-    except (ValueError, urllib.error.URLError):
-        print('ERROR: bad url was given - insert valid urls only')
+    text = urllib.request.urlopen(url).read().decode("utf-8")
+    counter = create_counter(text)
+    save_counter_to_file(counter)
+    return counter
 
 
 def string_to_counter(text: str) -> Counter:
@@ -91,14 +112,10 @@ def text_file_to_counter(file_path: str) -> Counter:
     :param file_path: a given file path the the text file
     :return: a counter with cleaned up words as keys and occurrences as values
     """
-    try:
-        with open(file_path) as file:
-            counter = create_counter(file.read())
-            save_counter_to_file(counter)
-            return counter
-
-    except OSError:
-        print('ERROR: bad file path was given, file not found - insert valid file paths only')
+    with open(file_path) as file:
+        counter = create_counter(file.read())
+        save_counter_to_file(counter)
+        return counter
 
 
 def clean_text(text: str) -> str:

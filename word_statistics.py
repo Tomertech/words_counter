@@ -1,13 +1,25 @@
-from counter_utils.counter_utils import load_counter_from_file
+from counter_utils.counter_utils import load_counter_from_file, delete_counter
+from flask_restful import Resource, reqparse
+from flask import Response
 
 
-def word_statistics(word: str) -> int:
-    """
-    Receives a word and returns the number of times the word appeared so far (in all previous calls)
-    """
-    if not isinstance(word, str):
-        print("ERROR: word must be a string")
-        return 0
+class Statistics(Resource):
 
-    counter = load_counter_from_file()
-    return counter[word]
+    def get(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('word', required=True, type=str)
+        args = parser.parse_args()
+        word = args.word.lower()
+        try:
+            counter = load_counter_from_file()
+            return Response(response=f'The word "{word}" appeared so far {counter[word]} times', status=401)
+        except OSError:
+            Response(response="ERROR: could not load counter file", status=401)
+
+    def delete(self):
+        try:
+            delete_counter()
+            return Response(response="Counter was reset", status=200)
+        except OSError:
+            Response(response="ERROR: could not reset counter", status=401)
+

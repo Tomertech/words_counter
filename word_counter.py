@@ -1,34 +1,22 @@
-import os
-from counter_utils.counter_utils import url_to_counter, string_to_counter, text_file_to_counter, counter_exists, counter_file_name
+from counter_utils.counter_utils import word_counter
+from flask_restful import Resource, reqparse
+from flask import Response
 
 
-def word_counter(source: str, source_type: str):
-    """
-    :param source: text path (url, file path or string)
-    :param source_type: the type of the source
-    :return: None
+class WordsCounter(Resource):
 
-    Receives a text input and counts the number of appearances for each word in the input and saves the counter_utils.
-    """
-    if not isinstance(source, str):
-        print("ERROR: source must be a string")
-        return
+    def post(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('source', required=True, type=str)
+        parser.add_argument('type', choices=['url', 'file', 'string'], required=True, type=str)
+        args = parser.parse_args()
+        try:
+            word_counter(args.source, args.type)
+        except (ValueError, OSError):
+            return Response(response="ERROR: source is invalid", status=401)
 
-    if source_type == 'url':
-        url_to_counter(source)
-    elif source_type == 'file':
-        text_file_to_counter(source)
-    elif source_type == 'string':
-        string_to_counter(source)
-    else:
-        print("ERROR: source type must be one of the following: 'url', 'file' or 'string'")
+        return Response(response="Got it!", status=200)
 
 
-def reset_counter():
-    """
-    resetting the counter (by deleting it)
-    """
-    if counter_exists():
-        os.remove(counter_file_name)
 
 

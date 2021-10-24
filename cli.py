@@ -1,6 +1,7 @@
 import argparse
-from word_counter import word_counter, reset_counter
-from word_statistics import word_statistics
+from counter_utils.counter_utils import word_counter, delete_counter, load_counter_from_file
+
+# this is a Command Line Interface
 
 parser = argparse.ArgumentParser('word counter and statistics.', add_help=False)
 
@@ -17,15 +18,15 @@ parser.add_argument('--word', type=str, required=False,
 args = parser.parse_args()
 
 if args.service in ['counter', 'c']:
-    print('Got it, now processing...')
+    print('Got it!')
     word_counter(args.source, args.type)
-    print('Done')
 
 elif args.service in ['statistics', 's']:
-    count = word_statistics(args.word)
-    print(f'The word "{args.word}" appeared so far {count} times')
+    counter = load_counter_from_file()
+    word = args.word.lower()
+    print(f'The word "{word}" appeared so far {counter[word]} times')
 
 elif args.service in ['reset', 'r']:
-    reset_counter()
-    print('counter was reset')
+    delete_counter()
+    print('Counter was reset')
 
