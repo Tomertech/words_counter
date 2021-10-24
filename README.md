@@ -27,16 +27,22 @@ When using the Counter endpoint there are 3 options:
 Insert a path to a text file:
 ```
 POST http://127.0.0.1:5000/wordscounter?source=file_path/file.txt&type=string
+
+Got it!
 ```
 
 Insert a URL to text:
 ```
 POST http://127.0.0.1:5000/wordscounter?type=url&source=http://www.textfiles.com/100/hack11a.txt                            
+
+Got it!
 ```
 
 Insert a string:
 ```
 POST http://127.0.0.1:5000/wordscounter?type=url&source="Hey Lemonade! looking forward to hearing from you :)"
+
+Got it!
 ```
 
 ##### Using the Statistics endpoint
@@ -44,6 +50,8 @@ POST http://127.0.0.1:5000/wordscounter?type=url&source="Hey Lemonade! looking f
 Get the number of times a word appeared so far:
 ```
 GET http://127.0.0.1:5000/statistics?word=lemonade
+
+The word "lemonade" appeared so far 12 times
 ```
 
 ##### Reset the counter
@@ -51,6 +59,8 @@ GET http://127.0.0.1:5000/statistics?word=lemonade
 Reset all words in counter:
 ```
 DELETE http://127.0.0.1:5000/statistics
+
+Counter was reset
 ```
 
 ### Assumptions
